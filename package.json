@@ -1,0 +1,35 @@
+{
+  "name": "vue3-image-input",
+  "version": "0.0.4",
+  "description": "Picture input for Vue 3",
+  "files": ["dist"],
+  "main": "./dist/vue3-image-input.umd.js",
+  "module": "./dist/vue3-image-input.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue3-image-input.es.js",
+      "require": "./dist/vue3-image-input.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview --port 5050",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "vue": "^3.2.36"
+  },
+  
+  "devDependencies": {
+    "@types/node": "^17.0.36",
+    "@vitejs/plugin-vue": "^2.3.3",
+    "@vue/tsconfig": "^0.1.3",
+    "typescript": "~4.6.3",
+    "vite": "^2.9.9",
+    "vue-tsc": "^0.35.2"
+  },
+  "keywords": ["picture input", "image input", "Vue", "Vue 3"],
+  "author": "RatumArch",
+  "license": "MIT"
+}
