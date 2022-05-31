@@ -1,6 +1,6 @@
 {
   "name": "vue3-image-input",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Picture input for Vue 3",
   "files": ["dist"],
   "main": "./dist/vue3-image-input.umd.js",
