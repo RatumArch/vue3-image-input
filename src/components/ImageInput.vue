@@ -2,7 +2,7 @@
 
     <div class="image-input" :style="{width: width[format]}">
         <label :for="`image-input-opaq-${inputId}`" class="preview-label">
-        
+            <span v-if="filename.length===0" class="placeholder">{{textPlaceholder}}</span>
             <img v-if="fileType==='image'||fileType===null" :src="blobUrl ?? imagePlaceholder" :alt="alt" class="preview"/>
             <video v-if="fileType==='video'" :src="blobUrl ?? imagePlaceholder" class="preview" controls ></video>
             <iframe v-if="fileType==='pdf'" :src="blobUrl ?? imagePlaceholder" :alt="alt" class="preview" ></iframe>
@@ -37,7 +37,7 @@ export default defineComponent({
             },
         imageInputId: {type: String, default: null, required: false },
         imagePlaceholder: { type: String, default: './picture-icon2.svg', required: false},
-        
+        textPlaceholder: { type: String, default: 'Cliquez ou faîtes glisser', required: false}   
     },
     
     setup(props) {

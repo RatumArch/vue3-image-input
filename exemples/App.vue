@@ -6,7 +6,13 @@ import '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css'
 
 <template>
   <h1>Test of component</h1>
-  <ImageInput format="medium" />
+  <div>
+    <label>Your broken product</label> <input type="text" />
+
+    <ImageInput format="medium" />
+    
+    <button type="submit">Submit</button>
+  </div>
 </template>
 
 <style>
