@@ -1,4 +1,4 @@
 import ImageInput from './components/ImageInput.vue'
-import './style.css'
+import * as style from './style.css'
 
-export default ImageInput
+export {ImageInput, style}

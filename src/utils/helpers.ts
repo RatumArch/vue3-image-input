@@ -1,4 +1,4 @@
-export type mimetype = 'image'|'video'|'pdf'
+export type mimetype = 'image'|'video'|'audio'|'pdf'
 
 /** Split a str by slash and extract mime type */
 export function getMimeType(type: string): mimetype {
