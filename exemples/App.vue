@@ -1,79 +1,51 @@
 <script setup lang="ts">
 //import ImageInput from '../src/components/ImageInput.vue'
-import ImageInput from '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/vue3-image-input.es.js';
+import {ImageInput } from '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/vue3-image-input.es.js';
 import '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css'
 </script>
 
 <template>
-  <h1>Test of component</h1>
+  <h1>Upload a beautiful picture</h1>
   <div>
-    <label>Your broken product</label> <input type="text" />
+ 
 
-    <ImageInput format="medium" />
+    <ImageInput format="medium" resizable  class="your-class" />
     
-    <button type="submit">Submit</button>
+    <button type="submit">Send</button>
   </div>
 </template>
 
-<style>
-@import './assets/base.css';
+<style  >
+/*@import url('/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css');*/
 
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
 
-  font-weight: normal;
+.your-class {
+  width: 200px;
+  height: 400px;
+  background-color: #ef0d50;
+}
+.your-class .preview {
+  background-color: #e1f2f7;
+  margin-top: 20px;
 }
 
-header {
-  line-height: 1.5;
+button {
+  font-size: 25px;
+  background-color: #70bb3f;
+  color: aliceblue;
+  border-style: none;
+  border-radius: 5px;
+  padding: 15px;
+  width: 200px;
+  margin-top: 100px;
+}
+h1 {
+  color: #e1f2f7;
+  margin-bottom: 50px;
+}
+body {
+  background-color: #1f3044;
+  padding-left: 200px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-}
 </style>
