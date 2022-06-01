@@ -11,7 +11,7 @@ Support preview for :
 * **PDF**
 
 
-<img src="./media/Screenshot_21.png" width="300" alt="Screenshot de présentation" >
+<img src="./media/Screenshot_21.png" width="500" alt="Screenshot de présentation" >
 
 # Install
 ```
