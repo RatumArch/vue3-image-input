@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { computed, ref, watch } from 'vue';
 import ImageInput from '../src/components/ImageInput.vue'
 //import {ImageInput } from '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/vue3-image-input.es.js';
 //import '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css'
 
 const onSubm = () => console.log("form submitted")
+const theFilename = ref("jj")
+
 
 </script>
 
@@ -13,9 +16,11 @@ const onSubm = () => console.log("form submitted")
  
 <form action="/exemples" method="POST"  >
   <input type="text" name="rrtext"/>
-    <ImageInput format="medium" resizable class="your-class" accept="" name-id="uploes" />
+    <ImageInput v-model="theFilename" class="your-class" name="uploader" @input="onSubm" />
     
     <button type="submit">Send</button>
+    
+    <h1>Your file : {{theFilename}} </h1>
     </form>
   </div>
 </template>

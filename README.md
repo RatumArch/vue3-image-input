@@ -31,7 +31,8 @@ import { ImageInput } from 'vue3-image-input'
         ```js
         import '/node_modules/vue3-image-input/dist/style.css'
         ```
-If you don't import the built-in CSS, the components will not be ergonomic and you will have to write your custom CSS
+If you don't import the built-in CSS, the components will not be ergonomic and you will have to write your custom CSS.
+3. Add the attribute **name** to the *ImageInput* component.
 
 ## Exemple in a SFC
 
@@ -42,9 +43,10 @@ If you don't import the built-in CSS, the components will not be ergonomic and y
   
   
   <ImageInput 
-      format="large"
+      accept="image/*"
       textPlaceholder="Have you a picture ?"
       resizable
+      name="picture-uploader"
       class="a-class" />
 
   <button type="submit">Submit</button>
@@ -53,7 +55,7 @@ If you don't import the built-in CSS, the components will not be ergonomic and y
 
 ```css
 <style >
-/* an app.vue */
+/* an-app.vue */
 @import '/node_modules/vue3-image-input/dist/style.css';
 
 .a-class {
@@ -69,12 +71,25 @@ If you don't import the built-in CSS, the components will not be ergonomic and y
 ```
 
 # Props
-* ## accept
-  * default value : ```"image/*, audio/*, video/*"```
-  * type: ```string```
-* ## imagePlaceholder
+## Required
+* ### accept
+  * Default value : ```"image/*, audio/*, video/*"```
+  * Type: ```string```
+* ### name
+  * Required prop
+  * Equivalent to the *name* attribute in the tradutional form input.
+  * Type: ```string```
+---
+## Optionals
+* ### imagePlaceholder
   Custom image
-  * default value : built-in cover image
+  * Default value : built-in cover image*
+* ### alt
+* ### textPlaceholder
+* ### resizable
+
+---
+# Events
 
 # Licence
 MIT
