@@ -1,17 +1,22 @@
 <template>
 
-    <div class="image-input" :class="{resizable: resizable}" >
-        <label :for="`image-input-opaq-${nameId ?? inputId}`" :id="`label-input-opaq-${nameId ?? inputId}`" class="preview-label">
+    <div class="image-input" :class="{ focused: onFocus, resizable: resizable}" >
+        <label :for="`image-input-opaq-${name}`" :id="`label-input-opaq-${name}`" class="preview-label">
             <span v-if="filename.length===0" class="placeholder">{{textPlaceholder}}</span>
             
             <img v-if="fileType==='image'||fileType===null" :src="blobUrl ?? imagePlaceholder" :alt="alt" class="preview"/>
             <audio v-if="fileType==='audio'" :src="blobUrl ?? imagePlaceholder" class="preview" controls ></audio>
             <video v-if="fileType==='video'" :src="blobUrl ?? imagePlaceholder" class="preview" controls ></video>
-            <iframe v-if="fileType==='pdf'" :src="blobUrl ?? imagePlaceholder" :alt="alt" class="preview" ></iframe>
+            <object type="application/pdf" v-if="fileType==='pdf'" :data="blobUrl ?? imagePlaceholder" :alt="alt" class="preview" ></object>
             
             <div class="filename">{{filename}}</div>
         </label>
-        <input type="file" :id="`image-input-opaq-${nameId ?? inputId}`" :name="nameId" :accept="accept" ref="input" @input="takeFile"/>
+        <input type="file"
+                :id="`image-input-opaq-${name}`" :name="name"
+                :accept="accept" ref="input"
+                @input="emitInput" @change="emitChanges"
+                @focus="emitFocus" @focusout="focusOff"
+                 />
         
     </div>
 
@@ -35,11 +40,13 @@ interface ImageInputProps {
     accept: string,
     /** @description Alternative text if the preview image doesn't appear */
     alt?: string,
+
+    modelValue?: string,
     /**
      * Value for the attribute "name" of the input.
-     * It will also be bind to the "id attribute", so you should add this props if you use multiple instance of ImageInput in the same page
+     * It will also be bind to the "id attribute"
      */
-    nameId?: string,
+    name: string,
     
     /**  @description Original image for preview */
     imagePlaceholder?: string,
@@ -47,6 +54,7 @@ interface ImageInputProps {
 
     resizable?: boolean
 }
+const emit = defineEmits([ 'change', 'focus', 'focusIn', 'focusOut', 'input', 'update:modelValue' ])
 
     const props = withDefaults(defineProps<ImageInputProps>(), {
         accept: "image/*, audio/*, video/*",
@@ -55,43 +63,41 @@ interface ImageInputProps {
         textPlaceholder: "Cliquez ou faîtes glisser",
         resizable: false
     })
-
-    const date = new Date()
-    const currentTime = `${date.getDate()}${date.getHours()}${date.getMinutes()}`
-    const inputId = ref(currentTime)
-
-    const width: Ref = ref({ little: '50px', medium: '200px', large: '600px' })
     
-    const blobUrl = ref<string|null>(null)
+const blobUrl = ref<string|null>(null)
 
-    const input= ref<any>(null)
+const input= ref<any>(null)
+
+const filename = ref<string>("")
+const fileType = ref<mimetype|null>(null)
+
+const onFocus = ref<boolean>(false)
 
 
-    const value = input.value
-    const files = value?.files
-    const filename = ref<string>("")
-    const fileType = ref<mimetype|null>(null)
+const emitInput = (event: any) => {
+    let fileUploaded: File = event.target.files[0]
+    
+    filename.value = fileUploaded.name
+    fileType.value = getFileMimeType(fileUploaded)
+    
+    blobUrl.value= URL.createObjectURL( fileUploaded)
 
+    emit('update:modelValue', filename.value)
+    emit('input')
+}
+const emitChanges = (event: any) => { emit('change') }
+const emitFocus = () => { emit('focus'); onFocus.value=true; }
+const focusOff = () => { onFocus.value=false }
 
-    const takeFile = (event: any) => {
-        let fileUploaded: File = event.target.files[0]
-        console.log(fileUploaded);
-        
-        filename.value = fileUploaded.name
-        fileType.value = getFileMimeType(fileUploaded)
-        console.log(fileType.value);
-        
-        blobUrl.value= URL.createObjectURL( fileUploaded)
-    }
-
-    defineExpose({ filename, fileType, value })
+defineExpose({ filename, fileType })
 
 </script>
 
 <style scoped>
 .image-input {
     display: block;
-    padding: 15px;
+    padding-top: 15px;
+    padding: 20px;
     resize: none;
     
 }
@@ -114,13 +120,19 @@ input[type=file] {
     height: 100%;
     cursor: pointer;
 }
+
 .preview {
     width: 100%;
     height: 100%;
-    border-style: dashed; 
-    ;
+    border-style: dotted; 
     border-radius: 10px;
     border-color: #051622;
+}
+.focused {
+    border-style: dashed;
+    border-width: 2px;
+    border-color: blue;
+    box-shadow: 0px 0px 4px 2px lightblue;
 }
 .resizable { 
     overflow: hidden; resize: both; border-style: dashed; border-width: 2px;
