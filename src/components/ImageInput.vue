@@ -1,7 +1,7 @@
 <template>
 
     <div class="image-input" :class="{resizable: resizable}" >
-        <label :for="`image-input-opaq-${inputId}`" class="preview-label">
+        <label :for="`image-input-opaq-${nameId ?? inputId}`" :id="`label-input-opaq-${nameId ?? inputId}`" class="preview-label">
             <span v-if="filename.length===0" class="placeholder">{{textPlaceholder}}</span>
             
             <img v-if="fileType==='image'||fileType===null" :src="blobUrl ?? imagePlaceholder" :alt="alt" class="preview"/>
@@ -11,72 +11,81 @@
             
             <div class="filename">{{filename}}</div>
         </label>
-        <input type="file" :id="`image-input-opaq-${inputId}`" accept="image/*, video/*" ref="input" @input="takeFile"/>
+        <input type="file" :id="`image-input-opaq-${nameId ?? inputId}`" :name="nameId" :accept="accept" ref="input" @input="takeFile"/>
         
     </div>
 
 </template>
 
-<script lang="ts" >
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts" >
+import { defineProps, ref, withDefaults } from 'vue'
 import type { StyleValue } from 'vue'
+//import type { ImageInputProps  } from '@/types/props'
 import type { Ref } from 'vue'
 //import "../style.css"
 import { getFileMimeType } from '../utils'
 import type { mimetype } from '../utils'
 
-const IMAGE='image'
-const VIDEO='video'
-const PDF='pdf'
-
-export default defineComponent({
-    name: 'ImageInput',
-    props: { 
-        alt: { type: String, default: 'Insérer image ici', required: false},
-        accept: { type: String, required: false },
-        /** Peut être égal l'une de ces ttrois bvaleurs : 'little', 'medium', 'large' )  */
-        format: { 
-            type: String, default: 'large',
-            validator: (value: string) => ['little', 'medium', 'large'].includes(value) 
-            },
-        imageInputId: {type: String, default: null, required: false },
-
-        imagePlaceholder: { type: String, default: './picture-icon2.svg', required: false},
-        textPlaceholder: { type: String, default: 'Cliquez ou faîtes glisser', required: false},
-
-        resizable: { type: Boolean, default: false}
-
-    },
+interface ImageInputProps {
+    /** 
+     * The same "accept" attribute as the one used in traditional file input.
+     * @example accept="image/*, video/*"
+     * @description [See possible values on MDN](https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/file#accept)
+     */
+    accept: string,
+    /** @description Alternative text if the preview image doesn't appear */
+    alt?: string,
+    /**
+     * Value for the attribute "name" of the input.
+     * It will also be bind to the "id attribute", so you should add this props if you use multiple instance of ImageInput in the same page
+     */
+    nameId?: string,
     
-    setup(props) {
-        const date = new Date()
-        const currentTime = `${date.getDate()}${date.getHours()}${date.getMinutes()}`
-        const inputId = ref(props.imageInputId ?? currentTime)
+    /**  @description Original image for preview */
+    imagePlaceholder?: string,
+    textPlaceholder?: string
 
-        const width: Ref = ref({ little: '50px', medium: '200px', large: '600px' })
+    resizable?: boolean
+}
+
+    const props = withDefaults(defineProps<ImageInputProps>(), {
+        accept: "image/*, audio/*, video/*",
+        alt: "Insérer un fichier ici",
+        imagePlaceholder: "/picture-icon2.svg",
+        textPlaceholder: "Cliquez ou faîtes glisser",
+        resizable: false
+    })
+
+    const date = new Date()
+    const currentTime = `${date.getDate()}${date.getHours()}${date.getMinutes()}`
+    const inputId = ref(currentTime)
+
+    const width: Ref = ref({ little: '50px', medium: '200px', large: '600px' })
+    
+    const blobUrl = ref<string|null>(null)
+
+    const input= ref<any>(null)
+
+
+    const value = input.value
+    const files = value?.files
+    const filename = ref<string>("")
+    const fileType = ref<mimetype|null>(null)
+
+
+    const takeFile = (event: any) => {
+        let fileUploaded: File = event.target.files[0]
+        console.log(fileUploaded);
         
-        const blobUrl = ref<string|null>(null)
-
-        const input= ref<any>(null)
-
-        const files = input.value?.files
-        const filename = ref<string>("")
-        const fileType = ref<mimetype|null>(null)
-
-
-        const takeFile = (event: any) => {
-            let fileUploaded: File = event.target.files[0]
-            console.log(fileUploaded);
-            
-            filename.value = fileUploaded.name
-            fileType.value = getFileMimeType(fileUploaded)
-            console.log(fileType.value);
-            
-            blobUrl.value= URL.createObjectURL( fileUploaded)
-        }
-        return { width, blobUrl, files, filename, fileType, inputId, takeFile }
+        filename.value = fileUploaded.name
+        fileType.value = getFileMimeType(fileUploaded)
+        console.log(fileType.value);
+        
+        blobUrl.value= URL.createObjectURL( fileUploaded)
     }
-})
+
+    defineExpose({ filename, fileType, value })
+
 </script>
 
 <style scoped>
