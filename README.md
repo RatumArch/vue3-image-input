@@ -18,14 +18,19 @@ Support preview for :
 npm i vue3-image-input
 ```
 # Usage
-1. Import the ImageInput component
+1.  Import the *ImageInput* component
 ```js
 import { ImageInput } from 'vue3-image-input'
 ```
-2. Import style.css in style block of your SFC (don't work with *scoped* attribute).
-  ```css
-  @import '/node_modules/vue3-image-input/dist/style.css'; 
-  ```
+2. Import style.css
+      * in style block of your SFC (don't work with *scoped* attribute).
+        ```css
+        @import '/node_modules/vue3-image-input/dist/style.css';
+        ```
+      * or in the ```<script setup>```
+        ```js
+        import '/node_modules/vue3-image-input/dist/style.css'
+        ```
 If you don't import the built-in CSS, the components will not be ergonomic and you will have to write your custom CSS
 
 ## Exemple in a SFC
