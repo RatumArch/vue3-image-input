@@ -53,7 +53,7 @@ If you don't import the built-in CSS, the components will not be ergonomic and y
 
 ```css
 <style >
-/* an app.vue */
+/* an-app.vue */
 @import '/node_modules/vue3-image-input/dist/style.css';
 
 .a-class {
