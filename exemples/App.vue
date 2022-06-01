@@ -1,17 +1,22 @@
 <script setup lang="ts">
-//import ImageInput from '../src/components/ImageInput.vue'
-import {ImageInput } from '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/vue3-image-input.es.js';
-import '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css'
+import ImageInput from '../src/components/ImageInput.vue'
+//import {ImageInput } from '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/vue3-image-input.es.js';
+//import '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css'
+
+const onSubm = () => console.log("form submitted")
+
 </script>
 
 <template>
   <h1>Upload a beautiful picture</h1>
   <div>
  
-
-    <ImageInput format="medium" resizable  class="your-class" />
+<form action="/exemples" method="POST"  >
+  <input type="text" name="rrtext"/>
+    <ImageInput format="medium" resizable class="your-class" accept="" name-id="uploes" />
     
     <button type="submit">Send</button>
+    </form>
   </div>
 </template>
 
