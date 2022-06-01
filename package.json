@@ -2,6 +2,7 @@
   "name": "vue3-image-input",
   "version": "0.0.6",
   "description": "Picture input for Vue 3",
+  "repository": "https://github.com/RatumArch/vue3-input-image-alpha.git",
   "files": ["dist"],
   "main": "./dist/vue3-image-input.umd.js",
   "module": "./dist/vue3-image-input.es.js",
