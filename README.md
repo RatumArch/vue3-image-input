@@ -2,7 +2,7 @@
 
 File input for Vue 3.
 =======
-This enhanced file input enable to pick a file with a preview.
+This is an enhanced and customizable file input enable to pick a file with a preview.
 
 Support preview for :
 * **Image** : jpg, png, svg...
@@ -85,11 +85,32 @@ If you don't import the built-in CSS, the components will not be ergonomic and y
   Custom image
   * Default value : built-in cover image*
 * ### alt
+* ### closeIcon
 * ### textPlaceholder
 * ### resizable
 
 ---
 # Events
+*
+  ```js
+  @input=""
+  ```
+*
+  ```js
+  @change=""
+  ```
+*
+  ```js
+  @focus=""
+  ```
+*
+  ```js
+  @focusOff=""
+  ```
+*
+  ```js
+  @onWithdraw="" // When the user remove the from file input. The event emitted is a File object.
+  ```
 
 # Licence
 MIT

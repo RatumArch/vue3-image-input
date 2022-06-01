@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import ImageInput from '../src/components/ImageInput.vue'
-//import {ImageInput } from '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/vue3-image-input.es.js';
+//import ImageInput from '../src/components/ImageInput.vue'
+import {ImageInput } from '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/vue3-image-input.es.js';
 //import '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css'
 
-const onSubm = () => console.log("form submitted")
+const onSubm = (e) => console.log(e)
 const theFilename = ref("jj")
 
 
@@ -14,9 +14,9 @@ const theFilename = ref("jj")
   <h1>Upload a beautiful picture</h1>
   <div>
  
-<form action="/exemples" method="POST"  >
-  <input type="text" name="rrtext"/>
-    <ImageInput v-model="theFilename" class="your-class" name="uploader" @input="onSubm" />
+<form action="/" method="GET"  >
+  <input type="text" name="rr"/>
+    <ImageInput v-model="theFilename" resizable class="your-class" name="uploader" accept="image/*" @onWithdraw="onSubm" />
     
     <button type="submit">Send</button>
     
@@ -26,7 +26,7 @@ const theFilename = ref("jj")
 </template>
 
 <style  >
-/*@import url('/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css');*/
+@import url('/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css');
 
 
 .your-class {
@@ -37,6 +37,7 @@ const theFilename = ref("jj")
 .your-class .preview {
   background-color: #e1f2f7;
   margin-top: 20px;
+  border-radius: 50px;
 }
 
 button {
@@ -49,13 +50,4 @@ button {
   width: 200px;
   margin-top: 100px;
 }
-h1 {
-  color: #e1f2f7;
-  margin-bottom: 50px;
-}
-body {
-  background-color: #1f3044;
-  padding-left: 200px;
-}
-
 </style>
