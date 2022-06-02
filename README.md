@@ -86,7 +86,13 @@ If you don't import the built-in CSS, the components will not be ergonomic and y
   Custom image
   * Default value : built-in cover image*
 * ### alt
+* ### closeButton
+  * Use a close button to withdraw a picked file
+  * Type: ```boolean```
+  * Default value: true
 * ### closeIcon
+  * Path to custom icon for close button
+  * Type: ```string```
 * ### textPlaceholder
 * ### resizable
 

@@ -5,13 +5,13 @@
         <label :for="`image-input-opaq-${name}`" :id="`label-input-opaq-${name}`" class="preview-label">
             <span v-if="filename.length===0" class="placeholder">{{textPlaceholder}}</span>
 
-            <img v-if="fileType==='image'||fileType===null" :src="blobUrl ?? imagePlaceholder" :alt="alt" class="preview"/>
+            <CoverPreview v-if="fileType==='image'||filename.length===0" :src="blobUrl" :alt="alt" class="preview"/>
+            <VideoPreview v-if="fileType==='video' && filename.length!==0" :src="blobUrl" class="preview" controls />
             <audio v-if="fileType==='audio'" :src="blobUrl ?? imagePlaceholder" class="preview" controls ></audio>
-            <video v-if="fileType==='video'" :src="blobUrl ?? imagePlaceholder" class="preview" controls ></video>
             <object type="application/pdf" v-if="fileType==='pdf'" :data="blobUrl ?? imagePlaceholder" :alt="alt" class="preview" ></object>
             
             <!-- @click.*prevent* is necessary instead of @click in order to block unwanted click events -->
-            <img v-if="closeButton" alt="close" :src="closeIcon" class="close-button" :class="{inactive: filename.length===0 }" @click.prevent="closeFile" />
+            <CloseIcon v-if="closeButton" alt="close" :src="closeIcon" class="close-button" :class="{inactive: filename.length===0 }" @click.prevent="closeFile" />
 
             <div class="filename">{{filename}}</div>
         </label>
@@ -28,13 +28,16 @@
 </template>
 
 <script setup lang="ts" >
-import { ref, withDefaults } from 'vue'
-import type { StyleValue } from 'vue'
+import { ref } from 'vue'
+import CoverPreview from './CoverPreview.vue'
+
 //import type { ImageInputProps  } from '@/types/props'
 import { EmitEvents } from '../constants/events'
 //import "../style.css"
 import { getFileMimeType } from '../utils'
 import type { mimetype } from '../utils'
+import CloseIcon from './icons/CloseIcon.vue'
+import VideoPreview from './VideoPreview.vue'
 
 interface ImageInputProps {
     /** 
@@ -70,7 +73,6 @@ const props = withDefaults(defineProps<ImageInputProps>(), {
     alt: "Insérer un fichier ici",
     capture: false,
     closeButton: true,
-    closeIcon: '/close.svg',
     imagePlaceholder: "/picture-icon2.svg",
     name: 'a',
     textPlaceholder: "Cliquez ou faîtes glisser",
@@ -124,6 +126,8 @@ defineExpose({ filename, fileType })
     padding: 20px;
     resize: none;
     background-color: #FDF1B8;
+    border-style: solid;
+    border-width: 1px;
     border-radius: 20px;
     overflow: hidden;
         

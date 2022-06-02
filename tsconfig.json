@@ -6,6 +6,7 @@
     "isolatedModules": false,
     "paths": {
       "@/*": ["./src/*"],
+      "@/assets/*": ["./src/assets/*"],
       "@/public/*": ["./public/*"],
       "@/constants/*": ["./src/constants/*"],
       "@/utils/*": ["./src/utils/*"],
