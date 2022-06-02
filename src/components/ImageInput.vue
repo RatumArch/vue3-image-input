@@ -13,7 +13,7 @@
             <!-- @click.*prevent* is necessary instead of @click in order to block unwanted click events -->
             <CloseIcon v-if="closeButton" alt="close" :src="closeIcon" class="close-button" :class="{inactive: filename.length===0 }" @click.prevent="closeFile" />
 
-            <div class="filename">{{filename}}</div>
+            <div class="filename" :title="filename" >{{filename}}</div>
         </label>
         <input type="file" ref="input"
                 :id="`image-input-opaq-${name}`" :name="name"
@@ -151,6 +151,8 @@ input[type=file] {
     letter-spacing: 1px;
     opacity: 0.4;
     text-align: center;
+    overflow: hidden;
+    width: 100%;
 }
 
 .preview-label {
