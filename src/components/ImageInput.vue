@@ -126,6 +126,8 @@ defineExpose({ filename, fileType })
     padding: 20px;
     resize: none;
     background-color: #FDF1B8;
+    border-style: solid;
+    border-width: 1px;
     border-radius: 20px;
     overflow: hidden;
         

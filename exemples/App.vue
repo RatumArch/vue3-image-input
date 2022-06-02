@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-//import ImageInput from '../src/components/ImageInput.vue'
-import {ImageInput } from '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/vue3-image-input.es.js';
+import ImageInput from '../src/components/ImageInput.vue'
+//import {ImageInput } from '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/vue3-image-input.es.js';
 //import '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css'
 
 const onSubm = (e) => console.log(e)
