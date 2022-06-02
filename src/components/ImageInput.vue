@@ -144,6 +144,8 @@ input[type=file] {
     letter-spacing: 1px;
     font-weight: lighter;
     font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+    width: 100%;
 }
 .placeholder {
     letter-spacing: 1px;
