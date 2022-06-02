@@ -1,44 +1,54 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import ImageInput from '../src/components/ImageInput.vue'
-//import {ImageInput } from '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/vue3-image-input.es.js';
+//import ImageInput from '../src/components/ImageInput.vue'
+import {ImageInput } from '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/vue3-image-input.es.js';
 //import '/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css'
 
-const onSubm = () => console.log("form submitted")
+const onSubm = (e) => console.log(e)
 const theFilename = ref("jj")
 
 
 </script>
 
 <template>
-  <h1>Upload a beautiful picture</h1>
+  <h1>Vue3 Image Input</h1>
   <div>
- 
-<form action="/exemples" method="POST"  >
-  <input type="text" name="rrtext"/>
-    <ImageInput v-model="theFilename" class="your-class" name="uploader" @input="onSubm" />
-    
+ <fieldset>
+<form action="/" method="GET"  >
+  <input type="text" name="rr" placeholder="your name"/>
+    <ImageInput v-model="theFilename" class="your-class" name="image-input" accept="video/*" @onWithdraw="onSubm" />
+
     <button type="submit">Send</button>
     
-    <h1>Your file : {{theFilename}} </h1>
     </form>
+    <legend><h2> Upload your work</h2></legend>
+    </fieldset>
   </div>
 </template>
 
 <style  >
-/*@import url('/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css');*/
+@import url('/home/mdo/Documents/projp/vue3-input-image-alpha2/dist/style.css');
 
 
 .your-class {
   width: 200px;
-  height: 400px;
-  background-color: #ef0d50;
+  height: 200px;
+
 }
-.your-class .preview {
+.second-class {
+  width: 400px;
+  height: 400px;
+}
+ .second-class .preview {
   background-color: #e1f2f7;
   margin-top: 20px;
+  border-radius: 20px;
 }
-
+ 
+ 
+input[type=text] {
+  margin-bottom: 20px;
+}
 button {
   font-size: 25px;
   background-color: #70bb3f;
@@ -49,13 +59,4 @@ button {
   width: 200px;
   margin-top: 100px;
 }
-h1 {
-  color: #e1f2f7;
-  margin-bottom: 50px;
-}
-body {
-  background-color: #1f3044;
-  padding-left: 200px;
-}
-
 </style>

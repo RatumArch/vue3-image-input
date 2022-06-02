@@ -2,7 +2,7 @@
 
 File input for Vue 3.
 =======
-This enhanced file input enable to pick a file with a preview.
+This is an enhanced and customizable file input enable to pick a file with a preview.
 
 Support preview for :
 * **Image** : jpg, png, svg...
@@ -11,7 +11,7 @@ Support preview for :
 * **PDF**
 
 
-<img src="./media/Screenshot_21.png" width="500" alt="Screenshot de présentation" >
+<img src="./media/Screenshot_24.png" width="300" alt="Screenshot de présentation" >
 
 # Install
 ```
@@ -39,19 +39,19 @@ If you don't import the built-in CSS, the components will not be ergonomic and y
 ```html
 <template>
   <!-- an-app.vue -->
-  <h2>Upload a picture</h2>
-  
+  <h2>Upload a beautiful picture</h2>
   
   <ImageInput 
       accept="image/*"
-      textPlaceholder="Have you a picture ?"
       resizable
       name="picture-uploader"
       class="a-class" />
 
-  <button type="submit">Submit</button>
+  <button type="submit">Send</button>
 </template>
 ```
+
+<img src="./media/Screenshot_21.png" width="500" alt="Screenshot de présentation" >
 
 ```css
 <style >
@@ -66,6 +66,7 @@ If you don't import the built-in CSS, the components will not be ergonomic and y
 .a-class .preview {
   background-color: #e1f2f7;
   margin-top: 20px;
+  border-radius: 10px;
 }
 
 ```
@@ -85,11 +86,32 @@ If you don't import the built-in CSS, the components will not be ergonomic and y
   Custom image
   * Default value : built-in cover image*
 * ### alt
+* ### closeIcon
 * ### textPlaceholder
 * ### resizable
 
 ---
 # Events
+*
+  ```js
+  @input=""
+  ```
+*
+  ```js
+  @change=""
+  ```
+*
+  ```js
+  @focus=""
+  ```
+*
+  ```js
+  @focusOff=""
+  ```
+*
+  ```js
+  @onWithdraw="" // When the user remove the from file input. The event emitted is a File object.
+  ```
 
 # Licence
 MIT
