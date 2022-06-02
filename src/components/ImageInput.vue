@@ -11,7 +11,7 @@
             <object type="application/pdf" v-if="fileType==='pdf'" :data="blobUrl ?? imagePlaceholder" :alt="alt" class="preview" ></object>
             
             <!-- @click.*prevent* is necessary instead of @click in order to block unwanted click events -->
-            <img alt="close" :src="closeIcon" class="close-button" :class="{inactive: filename.length===0 }" @click.prevent="closeFile" />
+            <img v-if="closeButton" alt="close" :src="closeIcon" class="close-button" :class="{inactive: filename.length===0 }" @click.prevent="closeFile" />
 
             <div class="filename">{{filename}}</div>
         </label>
@@ -20,6 +20,7 @@
                 :accept="accept"
                 @input="emitInput" @change="emitChanges"
                 @focus="emitFocus" @focusout="focusOff"
+                :capture="capture"
                  />
         
     </div>
@@ -44,6 +45,8 @@ interface ImageInputProps {
     accept: string,
     /** @description Alternative text if the preview image doesn't appear */
     alt?: string,
+    capture?: any,
+    closeButton?: boolean,
     /** Path to custom close icon */
     closeIcon?: string,
     /** value for v-model */
@@ -62,15 +65,19 @@ interface ImageInputProps {
 }
 const emit = defineEmits([ EmitEvents.CHANGE, EmitEvents.FOCUS, 'focusIn', 'focusOut', EmitEvents.INPUT, `${EmitEvents.UPDATE}:modelValue`, EmitEvents.WITHDRAW ])
 
-    const props = withDefaults(defineProps<ImageInputProps>(), {
-        accept: "image/*, audio/*, video/*",
-        alt: "Insérer un fichier ici",
-        closeIcon: '/close.svg',
-        imagePlaceholder: "/picture-icon2.svg",
-        name: '',
-        textPlaceholder: "Cliquez ou faîtes glisser",
-        resizable: false
-    })
+const props = withDefaults(defineProps<ImageInputProps>(), {
+    accept: "image/*, audio/*, video/*",
+    alt: "Insérer un fichier ici",
+    capture: false,
+    closeButton: true,
+    closeIcon: '/close.svg',
+    imagePlaceholder: "/picture-icon2.svg",
+    name: 'a',
+    textPlaceholder: "Cliquez ou faîtes glisser",
+    resizable: false
+})
+if(props.name.length===0) throw new Error("Prop 'name' is required and must not be empty");
+    
 const updateModelValue: any = `${EmitEvents.UPDATE}:modelValue`
 const blobUrl = ref<string|null>(null)
 
@@ -111,12 +118,15 @@ defineExpose({ filename, fileType })
 
 </script>
 
-<style scoped>
+<style scoped >
 .image-input {
     display: block;
-    padding-top: 15px;
     padding: 20px;
-    resize: none;    
+    resize: none;
+    background-color: #FDF1B8;
+    border-radius: 20px;
+    overflow: hidden;
+        
 }
 input[type=file] {
     opacity: 0;
@@ -125,8 +135,16 @@ input[type=file] {
     margin: 0;
     cursor: pointer;
 }
+
+.filename {
+    letter-spacing: 1px;
+    font-weight: lighter;
+    font-family: 'Courier New', Courier, monospace;
+}
 .placeholder {
     letter-spacing: 1px;
+    opacity: 0.4;
+    text-align: center;
 }
 
 .preview-label {
@@ -141,17 +159,26 @@ input[type=file] {
 .preview {
     width: 100%;
     height: 100%;
-    border-style: dotted; 
-    border-radius: 10px;
+    border-style: dotted;
+    border-radius: 40px;
     border-color: #051622;
+    background-color: white;
 }
 .close-button {
     margin-top: -20px;
     margin-left: 95%;
     background-color: #051622;
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     cursor: pointer;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    box-shadow: 0px 0px 4px 3px white;
+}
+.close-button:hover {
+    border-width: 3px;
 }
 .close-button.inactive {
     display: none;
@@ -163,7 +190,8 @@ input[type=file] {
     box-shadow: 0px 0px 4px 2px lightblue;
 }
 .resizable { 
-    overflow: hidden; resize: both; border-style: dashed; border-width: 2px;
+    resize: both; 
+    border-style: dashed; border-width: 2px;
 }
 
 </style>

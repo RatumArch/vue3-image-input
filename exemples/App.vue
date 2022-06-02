@@ -11,17 +11,18 @@ const theFilename = ref("jj")
 </script>
 
 <template>
-  <h1>Upload a beautiful picture</h1>
+  <h1>Vue3 Image Input</h1>
   <div>
- 
+ <fieldset>
 <form action="/" method="GET"  >
-  <input type="text" name="rr"/>
-    <ImageInput v-model="theFilename" resizable class="your-class" name="uploader" accept="image/*" @onWithdraw="onSubm" />
-    
+  <input type="text" name="rr" placeholder="your name"/>
+    <ImageInput v-model="theFilename" class="your-class" name="image-input" accept="video/*" @onWithdraw="onSubm" />
+
     <button type="submit">Send</button>
     
-    <h1>Your file : {{theFilename}} </h1>
     </form>
+    <legend><h2> Upload your work</h2></legend>
+    </fieldset>
   </div>
 </template>
 
@@ -31,15 +32,23 @@ const theFilename = ref("jj")
 
 .your-class {
   width: 200px;
-  height: 400px;
-  background-color: #ef0d50;
+  height: 200px;
+
 }
-.your-class .preview {
+.second-class {
+  width: 400px;
+  height: 400px;
+}
+ .second-class .preview {
   background-color: #e1f2f7;
   margin-top: 20px;
-  border-radius: 50px;
+  border-radius: 20px;
 }
-
+ 
+ 
+input[type=text] {
+  margin-bottom: 20px;
+}
 button {
   font-size: 25px;
   background-color: #70bb3f;
